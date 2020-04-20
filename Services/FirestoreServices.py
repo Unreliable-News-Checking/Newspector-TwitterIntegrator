@@ -24,7 +24,10 @@ class FireStoreServices(object):
             'profile_photo': account.profile_photo,
             'birthday': account.birthday,
         }
-        self.db.collection('accounts').document(account.username).set(account_data)
+        if self.db.collection('accounts').document(account.username).get().exists:
+            self.db.collection('accounts').document(account.username).update(account_data)
+        else:
+            self.db.collection('accounts').document(account.username).set(account_data)
 
     def add_tweet(self, tweet):
         tweet_data = {
