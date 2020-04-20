@@ -18,9 +18,15 @@ class Tweet(object):
         self.urls = urls
         self.photos = photos
         self.videos = videos
+        self.label = ""
 
-    def filter(self, regex):
-        self.text = re.sub(regex, "",  self.text, flags=re.IGNORECASE)
-        self.text = re.sub(r"http\S+", "",  self.text)
-        self.text = re.sub(r"pic.twitter.com\S+", "",  self.text)
-        self.text = re.sub(r"#\S+", "",  self.text)
+    def filter(self, stop_words):
+        for url in self.urls:
+            self.text = re.sub(url, "", self.text)
+        self.text = re.sub(r"http\S+", "", self.text)
+        self.text = re.sub(r"pic.twitter.com\S+", "", self.text)
+        self.text = re.sub("[\.][\.][\.]", " ", self.text)
+        for word in stop_words:
+            if self.text.lower().find(word.lower()) >= 0:
+                self.label = word
+                self.text = re.sub(word, "", self.text, flags=re.IGNORECASE)

@@ -3,7 +3,6 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-from google.cloud.firestore_v1 import DocumentReference
 
 
 class FireStoreServices(object):
@@ -40,6 +39,8 @@ class FireStoreServices(object):
             'likes': tweet.likes,
             'urls': tweet.urls,
             'photos': tweet.photos,
-            'videos': tweet.videos
+            'videos': tweet.videos,
+            'label': tweet.label,
+            'cluster_id': ""
         }
-        self.db.collection('tweets').document(tweet.tweet_id).set(tweet_data)
+        self.db.collection('train_tweets').document(tweet.tweet_id).set(tweet_data)

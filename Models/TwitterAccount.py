@@ -25,6 +25,6 @@ class TwitterAccount(object):
     def get_tweets(self):
         return self.tweet_list
 
-    def filter_tweets(self, regex):
+    def filter_tweets(self, stop_words):
         for tweet in self.get_tweets():
-            tweet.filter(regex)
+            tweet.filter(stop_words)

@@ -1,3 +1,5 @@
+import json
+
 from Models import TwitterAccount
 from Models import Tweet
 from Services import TwitterServices
@@ -7,14 +9,16 @@ from Controllers import ModelController
 
 class ServerApplication(object):
 
-    def __init__(self, accounts_resource, user_tweet_map_resource, firestore_credentials_resource):
+    def __init__(self, accounts_resource, user_tweet_map_resource, firestore_credentials_resource, filter_resource):
         self.accounts_resource = accounts_resource
         self.user_tweet_map_resource = user_tweet_map_resource
         self.firestore_credentials_resource = firestore_credentials_resource
-        self.filter_regex = r'breaking\:|update\:|live\:|breaking\||update\||live\||breaking|update|live'
+        self.filter_resource = filter_resource
         self.twitter_service = TwitterServices.TwitterServices(self.accounts_resource, self.user_tweet_map_resource)
-        self.firestore_service = FirestoreServices.FireStoreServices(self.firestore_credentials_resource);
+        self.firestore_service = FirestoreServices.FireStoreServices(self.firestore_credentials_resource)
         self.model_controller = ModelController.ModelController()
+        with open(self.filter_resource) as f:
+            self.stop_words = json.load(f)
 
     def run(self):
         self.download_accounts()
@@ -29,7 +33,8 @@ class ServerApplication(object):
 
     def download_tweets(self):
         for i in self.twitter_service.user_tweet_map:
-            tweets = self.twitter_service.fetch_latest_tweets_from_account(i, 4, self.twitter_service.user_tweet_map[i])
+            tweets = self.twitter_service.fetch_latest_tweets_from_account(i, 5,
+                                                                           self.twitter_service.user_tweet_map[i])
 
             if len(tweets) != 0:
                 for tweet in tweets:
@@ -63,9 +68,9 @@ class ServerApplication(object):
     def upload_accounts(self):
         for account in list(self.model_controller.get_accounts().values()):
             self.firestore_service.add_twitter_account(account)
-            print("Account info uploaded for " + account.username + " fetched")
+            print("Account info uploaded for " + account.username)
 
     def filter_tweets_from_accounts(self):
         for account in list(self.model_controller.get_accounts().values()):
-            account.filter_tweets(self.filter_regex)
+            account.filter_tweets(self.stop_words)
             print("Tweets filtered for " + account.username + " fetched")
