@@ -13,12 +13,19 @@ class FireStoreServices(object):
         self.db = firestore.client()
 
     def add_twitter_account(self, account):
+        followers = account.followers_count
+        followings = account.following_count
+
+        if followers == 1:
+            followers = followings
+            followings = 0
+
         if self.db.collection('accounts').document(account.username).get().exists:
             account_data = {
                 'username': account.username,
                 'name': account.name,
-                'followers_count': account.followers_count,
-                'following_count': account.following_count,
+                'followers_count': followers,
+                'following_count': followings,
                 'likes_count': account.likes_count,
                 'tweets_count': account.tweets_count,
                 'website': account.website,
@@ -30,8 +37,8 @@ class FireStoreServices(object):
             account_data = {
                 'username': account.username,
                 'name': account.name,
-                'followers_count': account.followers_count,
-                'following_count': account.following_count,
+                'followers_count': followers,
+                'following_count': followings,
                 'likes_count': account.likes_count,
                 'tweets_count': account.tweets_count,
                 'website': account.website,
@@ -39,7 +46,6 @@ class FireStoreServices(object):
                 'birthday': account.birthday,
                 'number_of_total_news': 0,
                 'number_of_first_news_in_group': 0,
-                'number_of_total_newsgroup_followers': 0,
                 'number_of_reports': 0,
                 'number_of_approvals': 0
             }
