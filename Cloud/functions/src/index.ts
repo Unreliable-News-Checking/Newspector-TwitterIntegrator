@@ -54,7 +54,12 @@ export const updateAccountInfoAfterNLP = functions.firestore
                             var message = {
                                 notification: {
                                     title: accountData.name,
-                                    body: (data.text).split(" ").splice(0, 12).join(" ") + "..."
+                                    body: (data.text).split(" ").splice(0, 12).join(" ") + "...",
+                                },
+                                data: {
+                                    click_action: "FLUTTER_NOTIFICATION_CLICK",
+                                    news_group_id: data.cluster_id
+
                                 },
                                 topic: data.cluster_id
                             };
