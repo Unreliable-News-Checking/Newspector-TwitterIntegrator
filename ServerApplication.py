@@ -33,7 +33,7 @@ class ServerApplication(object):
 
     def download_tweets(self):
         for i in self.twitter_service.user_tweet_map:
-            tweets = self.twitter_service.fetch_latest_tweets_from_account(i, 1,
+            tweets = self.twitter_service.fetch_latest_tweets_from_account(i, 4,
                                                                            self.twitter_service.user_tweet_map[i])
 
             if len(tweets) != 0:

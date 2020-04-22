@@ -1,19 +1,12 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 
 "use strict";
 admin.initializeApp();
 
 interface Dic {
-    [key: string]: Number
+    [key: string]: number
 }
-
 
 export const increaseFirstNewsScore = functions.firestore
     .document('clusters/{cluster_id}')
@@ -43,63 +36,53 @@ export const increaseFirstNewsScore = functions.firestore
         }
     });
 
-export const increaseNumberOfNews = functions.firestore
+export const updateAccountInfoAfterNLP = functions.firestore
     .document('tweets/{tweet_id}')
     .onUpdate((change, context) => {
         const data = change.after.data();
         const db = admin.firestore();
         if (data) {
             const account = data.username;
+            const categoryOfTweet = data.category;
             const accountRef = db.collection('accounts').doc(account);
+
             db.runTransaction(t => {
                 return t.get(accountRef)
                     .then(doc => {
                         const accountData = doc.data();
                         if (accountData) {
-                            const newNumber = accountData.number_of_total_news + 1;
-                            t.update(accountRef, { number_of_total_news: newNumber });
-                        }
+                            var message = {
+                                notification: {
+                                    title: accountData.name,
+                                    body: (data.text).split(" ").splice(0, 12).join(" ") + "..."
+                                },
+                                topic: data.cluster_id
+                            };
 
-                    }).catch(err => {
-                        console.log('Update failure:', err);
-                    });
-            }).then(result => {
-                console.log('Transaction success!');
-            }).catch(err => {
-                console.log('Transaction failure:', err);
-            });
-        }
-    });
+                            admin.messaging().send(message)
+                                .then((response) => {
+                                    console.log('Successfully sent message:', response);
+                                })
+                                .catch((error) => {
+                                    console.log('Error sending message:', error);
+                                });
 
-export const increaseNumberOfNewsInCategory = functions.firestore
-    .document('tweets/{tweet_id}')
-    .onUpdate((change, context) => {
-        const data = change.after.data();
-        const db = admin.firestore();
-        if (data) {
-            const account = data.username;
-            let categoryOfTweet = data.category;
-            const accountRef = db.collection('accounts').doc(account);
-            db.runTransaction(t => {
-                return t.get(accountRef)
-                    .then(doc => {
-                        const accountData = doc.data();
-                        if (accountData) {
                             const categoryCount = accountData[categoryOfTweet];
 
                             if (categoryCount) {
-                                const newData = <Dic>{
-                                    [categoryOfTweet]: categoryCount + 1
+                                let newData = <Dic>{
+                                    [categoryOfTweet]: categoryCount + 1,
+                                    number_of_total_news: accountData.number_of_total_news + 1
                                 };
                                 t.update(accountRef, newData);
                             }
                             else {
-                                const newData = <Dic>{
-                                    [categoryOfTweet]: 1
+                                let newData = <Dic>{
+                                    [categoryOfTweet]: 1,
+                                    number_of_total_news: accountData.number_of_total_news + 1
                                 };
                                 t.set(accountRef, newData, { merge: true });
                             }
-
                         }
                     }).catch(err => {
                         console.log('Update failure:', err);
@@ -111,3 +94,61 @@ export const increaseNumberOfNewsInCategory = functions.firestore
             });
         }
     });
+
+// export const increaseNumberOfNewsInCategory = functions.firestore
+//     .document('tweets/{tweet_id}')
+//     .onUpdate((change, context) => {
+//         const data = change.after.data();
+//         const db = admin.firestore();
+//         if (data) {
+//             const account = data.username;
+//             let categoryOfTweet = data.category;
+//             const accountRef = db.collection('accounts').doc(account);
+//             db.runTransaction(t => {
+//                 return t.get(accountRef)
+//                     .then(doc => {
+//                         const accountData = doc.data();
+//                         if (accountData) {
+//                             //     var map = accountData["categories"];
+
+//                             //     if (map) {
+//                             //         if (map.get(categoryOfTweet) >= 1) {
+//                             //             map.set(categoryOfTweet, map.get(categoryOfTweet) + 1);
+//                             //             t.update(accountRef, { categories: map });
+//                             //         } else {
+//                             //             map.set(categoryOfTweet, 1);
+//                             //             t.set(accountRef, { categories: map }, { merge: true });
+//                             //         }
+
+//                             //     } else {
+//                             //         map = new Map();
+//                             //         map.set(categoryOfTweet, 1);
+
+//                             //         t.set(accountRef, { categories: map }, { merge: true });
+//                             //     }
+//                             const categoryCount = accountData[categoryOfTweet];
+
+//                             if (categoryCount) {
+//                                 const newData = <Dic>{
+//                                     [categoryOfTweet]: categoryCount + 1
+//                                 };
+//                                 t.update(accountRef, newData);
+//                             }
+//                             else {
+//                                 const newData = <Dic>{
+//                                     [categoryOfTweet]: 1
+//                                 };
+//                                 t.set(accountRef, newData, { merge: true });
+//                             }
+
+//                         }
+//                     }).catch(err => {
+//                         console.log('Update failure:', err);
+//                     });
+//             }).then(result => {
+//                 console.log('Transaction success!');
+//             }).catch(err => {
+//                 console.log('Transaction failure:', err);
+//             });
+//         }
+//     });

@@ -5,12 +5,12 @@ import re
 class Tweet(object):
 
     # instance attributes
-    def __init__(self, username, tweet_id, is_retweet, time, text, reply_count, retweet_count, likes, urls,
+    def __init__(self, username, tweet_id, is_retweet, date, text, reply_count, retweet_count, likes, urls,
                  photos, videos):
         self.username = username
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
-        self.time = time
+        self.date = date
         self.text = text
         self.reply_count = reply_count
         self.retweet_count = retweet_count
@@ -19,6 +19,8 @@ class Tweet(object):
         self.photos = photos
         self.videos = videos
         self.label = ""
+        self.news_group_id = ""
+        self.category = ""
 
     def filter(self, stop_words):
         for url in self.urls:
@@ -28,5 +30,6 @@ class Tweet(object):
         self.text = re.sub("[\.][\.][\.]", " ", self.text)
         for word in stop_words:
             if self.text.lower().find(word.lower()) >= 0:
-                self.label = word
+                self.label = re.sub(r'[^a-zA-Z0-9]+', "", word)
                 self.text = re.sub(word, "", self.text, flags=re.IGNORECASE)
+        self.text = re.sub("BREAKING ", "", self.text)  # kötü bir practice ama yapacak bir şey yok

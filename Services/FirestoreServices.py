@@ -57,15 +57,17 @@ class FireStoreServices(object):
             'userRef': self.db.collection("accounts").document(tweet.username),
             'tweet_id': tweet.tweet_id,
             'is_retweet': tweet.is_retweet,
-            'time': tweet.time,
+            'date': tweet.date,
             'text': tweet.text,
             'reply_count': tweet.reply_count,
             'retweet_count': tweet.retweet_count,
+            'tweet_link': "twitter.com/" + tweet.username + "/status/" + tweet.tweet_id,
             'likes': tweet.likes,
             'urls': tweet.urls,
             'photos': tweet.photos,
             'videos': tweet.videos,
             'label': tweet.label,
-            'cluster_id': ""
+            'news_group_id': tweet.news_group_id,
+            'category': tweet.category
         }
-        self.db.collection('train_tweets').document(tweet.tweet_id).set(tweet_data)
+        self.db.collection('train_tweets').document().set(tweet_data)
