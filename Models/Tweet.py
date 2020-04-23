@@ -19,8 +19,7 @@ class Tweet(object):
         self.photos = photos
         self.videos = videos
         self.label = ""
-        self.news_group_id = ""
-        self.category = ""
+
 
     def filter(self, stop_words):
         for url in self.urls:

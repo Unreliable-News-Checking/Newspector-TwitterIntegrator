@@ -19,14 +19,20 @@ while var == 1:  # This constructs an infinite loop
 # import json
 # import re
 #
-# text = "Breaking: fksmfşlsakflisjfsnfljksl ..."
+# text = "LIVE VIDEO: fksmfşlsakflisjfsnfljksl ..."
 #
 # with open('Resources/stop_words.json') as f:
 #     stop_words = json.load(f)
 #
 # for word in stop_words:
 #     if text.lower().find(word.lower()) >= 0:
-#         print(word)
-#         text = re.sub(word, "", text, flags=re.IGNORECASE)
+#         text = re.sub(r"http\S+", "", text)
+#         text = re.sub(r"pic.twitter.com\S+", "", text)
 #         text = re.sub("[\.][\.][\.]", " ", text)
-#         print(text)
+#         for word in stop_words:
+#             if text.lower().find(word.lower()) >= 0:
+#                 label = re.sub(r'[^a-zA-Z0-9]+', "", word)
+#                 text = re.sub(word, "", text, flags=re.IGNORECASE)
+#         text = re.sub("BREAKING ", "", text)  # kötü bir practice ama yapacak bir şey yok
+# print(text)
+# print(label)
