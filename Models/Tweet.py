@@ -20,15 +20,18 @@ class Tweet(object):
         self.videos = videos
         self.label = ""
 
-
     def filter(self, stop_words):
+        is_label_set = False
         for url in self.urls:
             self.text = re.sub(url, "", self.text)
         self.text = re.sub(r"http\S+", "", self.text)
         self.text = re.sub(r"pic.twitter.com\S+", "", self.text)
-        self.text = re.sub("[\.][\.][\.]", " ", self.text)
         for word in stop_words:
             if self.text.lower().find(word.lower()) >= 0:
-                self.label = re.sub(r'[^a-zA-Z0-9]+', "", word)
                 self.text = re.sub(word, "", self.text, flags=re.IGNORECASE)
-        self.text = re.sub("BREAKING ", "", self.text)  # kötü bir practice ama yapacak bir şey yok
+                if is_label_set is False:
+                    self.label = re.sub(r'[^a-zA-Z0-9]+', "", word)
+                    is_label_set = True
+        self.text = re.sub("BREAKING ", "", self.text)  # Source bazlı filtering e geçince CASE Sensitive yapıcaz
+        self.text = re.sub("…", "", self.text, flags=re.IGNORECASE)
+        self.text = ' '.join(self.text.split())

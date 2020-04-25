@@ -9,11 +9,13 @@ from Controllers import ModelController
 
 class ServerApplication(object):
 
-    def __init__(self, accounts_resource, user_tweet_map_resource, firestore_credentials_resource, filter_resource):
+    def __init__(self, accounts_resource, user_tweet_map_resource, firestore_credentials_resource, filter_resource,
+                 page_count):
         self.accounts_resource = accounts_resource
         self.user_tweet_map_resource = user_tweet_map_resource
         self.firestore_credentials_resource = firestore_credentials_resource
         self.filter_resource = filter_resource
+        self.page_count = page_count
         self.twitter_service = TwitterServices.TwitterServices(self.accounts_resource, self.user_tweet_map_resource)
         self.firestore_service = FirestoreServices.FireStoreServices(self.firestore_credentials_resource)
         self.model_controller = ModelController.ModelController()
@@ -33,7 +35,7 @@ class ServerApplication(object):
 
     def download_tweets(self):
         for i in self.twitter_service.user_tweet_map:
-            tweets = self.twitter_service.fetch_latest_tweets_from_account(i, 4,
+            tweets = self.twitter_service.fetch_latest_tweets_from_account(i, self.page_count,
                                                                            self.twitter_service.user_tweet_map[i])
 
             if len(tweets) != 0:

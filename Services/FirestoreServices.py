@@ -16,8 +16,10 @@ class FireStoreServices(object):
         followers = account.followers_count
         followings = account.following_count
 
-        if followers == 1:
-            followers = followings
+        if followers is None:
+            followers = 0
+            
+        if followings is None:
             followings = 0
 
         if self.db.collection('accounts').document(account.username).get().exists:
@@ -71,4 +73,4 @@ class FireStoreServices(object):
             'news_group_id': "",
             'category': ""
         }
-        self.db.collection('tweets').document().set(tweet_data)
+        self.db.collection('train_tweets').document().set(tweet_data)
