@@ -71,6 +71,8 @@ class FireStoreServices(object):
             'label': tweet.label,
             'report_count': 0,
             'news_group_id': "",
-            'category': ""
+            'category': "",
+            'perceived_category': "",
+            'source_count_map': {}
         }
         self.db.collection('train_tweets').document().set(tweet_data)
