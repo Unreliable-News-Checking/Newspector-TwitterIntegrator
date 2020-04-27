@@ -6,7 +6,7 @@ class Tweet(object):
 
     # instance attributes
     def __init__(self, username, tweet_id, is_retweet, date, text, reply_count, retweet_count, likes, urls,
-                 photos, videos):
+                 photos, videos, category):
         self.username = username
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
@@ -18,6 +18,8 @@ class Tweet(object):
         self.urls = urls
         self.photos = photos
         self.videos = videos
+        self.category = category
+        self.perceived_category = category
         self.label = ""
 
     def filter(self, stop_words):

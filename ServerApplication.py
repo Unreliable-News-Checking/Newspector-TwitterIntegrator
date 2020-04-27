@@ -2,7 +2,7 @@ import json
 
 from Models import TwitterAccount
 from Models import Tweet
-from Services import TwitterServices
+from Services import TwitterServices, CategorizationService
 from Services import FirestoreServices
 from Controllers import ModelController
 
@@ -18,6 +18,7 @@ class ServerApplication(object):
         self.page_count = page_count
         self.twitter_service = TwitterServices.TwitterServices(self.accounts_resource, self.user_tweet_map_resource)
         self.firestore_service = FirestoreServices.FireStoreServices(self.firestore_credentials_resource)
+        self.categorization_service = CategorizationService.CategorizationService()
         self.model_controller = ModelController.ModelController()
         with open(self.filter_resource) as f:
             self.stop_words = json.load(f)
@@ -40,11 +41,19 @@ class ServerApplication(object):
 
             if len(tweets) != 0:
                 for tweet in tweets:
+                    category = "-"
+                    if len(tweet["entries"]["urls"]) > 0:
+                        print(tweet["entries"]["urls"][0])
+                        categories = self.categorization_service.get_category_and_keywords(
+                            tweet["entries"]["urls"][0]).categories
+                        if categories:
+                            category = categories[0].name.split("/")[1]
+
                     t = Tweet.Tweet(i, tweet["tweetId"], tweet["isRetweet"], tweet["time"],
                                     tweet["text"], tweet["replies"], tweet["retweets"], tweet["likes"],
                                     tweet["entries"]["urls"],
                                     tweet["entries"]["photos"],
-                                    tweet["entries"]["videos"])
+                                    tweet["entries"]["videos"], category)
                     self.model_controller.add_tweet_to_account(t, i)
                 self.twitter_service.update_map(i, int(tweets[0]["tweetId"]))
             print("Tweets fetched from " + i)

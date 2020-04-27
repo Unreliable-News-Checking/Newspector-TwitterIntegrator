@@ -49,7 +49,8 @@ class FireStoreServices(object):
                 'news_count': 0,
                 'news_group_leadership_count': 0,
                 'like_count': 0,
-                'dislike_count': 0
+                'dislike_count': 0,
+                'category_map': {}
             }
             self.db.collection('accounts').document(account.username).set(account_data)
 
@@ -69,10 +70,11 @@ class FireStoreServices(object):
             'photos': tweet.photos,
             'videos': tweet.videos,
             'label': tweet.label,
+            'category': tweet.category,
+            'perceived_category': tweet.perceived_category,
             'report_count': 0,
             'news_group_id': "",
-            'category': "",
-            'perceived_category': "",
-            'source_count_map': {}
+            'source_count_map': {},
+            'keyword_map': {}
         }
         self.db.collection('train_tweets').document().set(tweet_data)
