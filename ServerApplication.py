@@ -44,10 +44,15 @@ class ServerApplication(object):
                     category = "-"
                     if len(tweet["entries"]["urls"]) > 0:
                         print(tweet["entries"]["urls"][0])
-                        categories = self.categorization_service.get_category_and_keywords(
-                            tweet["entries"]["urls"][0]).categories
+                        try:
+                            categories = self.categorization_service.get_category_and_keywords(
+                                tweet["entries"]["urls"][0]).categories
+                        except:
+                            categories = None
+
                         if categories:
                             category = categories[0].name.split("/")[1]
+                            print(category)
 
                     t = Tweet.Tweet(i, tweet["tweetId"], tweet["isRetweet"], tweet["time"],
                                     tweet["text"], tweet["replies"], tweet["retweets"], tweet["likes"],
