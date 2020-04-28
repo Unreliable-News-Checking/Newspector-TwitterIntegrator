@@ -10,15 +10,18 @@ from Controllers import ModelController
 class ServerApplication(object):
 
     def __init__(self, accounts_resource, user_tweet_map_resource, firestore_credentials_resource, filter_resource,
+                 category_subcategory_map_resource,
                  page_count):
         self.accounts_resource = accounts_resource
         self.user_tweet_map_resource = user_tweet_map_resource
+        self.category_subcategory_map_resource = category_subcategory_map_resource
         self.firestore_credentials_resource = firestore_credentials_resource
         self.filter_resource = filter_resource
         self.page_count = page_count
         self.twitter_service = TwitterServices.TwitterServices(self.accounts_resource, self.user_tweet_map_resource)
         self.firestore_service = FirestoreServices.FireStoreServices(self.firestore_credentials_resource)
-        self.categorization_service = CategorizationService.CategorizationService()
+        self.categorization_service = CategorizationService.CategorizationService(
+            self.category_subcategory_map_resource)
         self.model_controller = ModelController.ModelController()
         with open(self.filter_resource) as f:
             self.stop_words = json.load(f)
@@ -44,16 +47,10 @@ class ServerApplication(object):
                     category = "-"
                     if len(tweet["entries"]["urls"]) > 0:
                         print(tweet["entries"]["urls"][0])
-                        try:
-                            categories = self.categorization_service.get_category_and_keywords(
-                                tweet["entries"]["urls"][0]).categories
-                        except:
-                            categories = None
 
-                        if categories:
-                            category = categories[0].name.split("/")[1]
-                            print(category)
-
+                        category = self.categorization_service.get_category(
+                            tweet["entries"]["urls"][0])
+                    print("Category: " + category)
                     t = Tweet.Tweet(i, tweet["tweetId"], tweet["isRetweet"], tweet["time"],
                                     tweet["text"], tweet["replies"], tweet["retweets"], tweet["likes"],
                                     tweet["entries"]["urls"],

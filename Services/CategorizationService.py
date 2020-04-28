@@ -1,24 +1,27 @@
-# # Imports the Google Cloud client library
+import json
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 from boilerpy3 import extractors
-# from multi_rake import Rake
 import os
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
-            "Resources/category-extraction-service-key.json"
+    "Resources/category-extraction-service-key.json"
+
 
 class CategorizationService:
 
-    def __init__(self):
-        # self.rake = Rake()
+    def __init__(self, category_subcategory_map_resource):
         self.extractor = extractors.ArticleExtractor()
         self.client = language.LanguageServiceClient()
-
+        with open(category_subcategory_map_resource) as json_file:
+            self.map = json.load(json_file)
 
     def extract_content(self, url):
-        content = self.extractor.get_content_from_url(url)
+        try:
+            content = self.extractor.get_content_from_url(url)
+        except:
+            return None
         content = content.replace("\n", "").replace("\"", "")
         content = content[:999]
         return content
@@ -33,13 +36,24 @@ class CategorizationService:
         categories = self.client.classify_text(document=document)
         return categories
 
-    # def get_keywords(text: str, num_keywords: int):
-    #     keywords = rake.apply(text)
-    #     return keywords[:num_keywords]
-
-    def get_category_and_keywords(self, url):
+    def get_category(self, url):
+        category = "-"
         content = self.extract_content(url)
-        categories = self.get_categories(content)
-        # keywords = get_keywords(content, 5)
-        return categories
-        # return categories, keywords
+        if content is None:
+            return category
+
+        try:
+            categories = self.get_categories(content).categories
+        except:
+            categories = None
+
+        if categories:
+            category = categories[0].name.split("/")[1]
+            if category == "News":
+                category = self.map[categories[0].name[1:]]
+            else:
+                try:
+                    category = self.map[categories[0].name.split("/")[1]]
+                except:
+                    print("Map does not have key: " + categories[0].name.split("/")[1])
+        return category
