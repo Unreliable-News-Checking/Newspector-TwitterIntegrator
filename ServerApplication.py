@@ -43,6 +43,7 @@ class ServerApplication(object):
                                                                            self.twitter_service.user_tweet_map[i])
 
             if len(tweets) != 0:
+                last_tweet_id = 0
                 for tweet in tweets:
                     category = "-"
                     if len(tweet["entries"]["urls"]) > 0:
@@ -57,15 +58,17 @@ class ServerApplication(object):
                                     tweet["entries"]["photos"],
                                     tweet["entries"]["videos"], category)
                     self.model_controller.add_tweet_to_account(t, i)
-                self.twitter_service.update_map(i, int(tweets[0]["tweetId"]))
+                    if int(tweet["tweetId"]) > last_tweet_id:
+                        last_tweet_id = int(tweet["tweetId"])
+                self.twitter_service.update_map(i, last_tweet_id)
             print("Tweets fetched from " + i)
-        self.twitter_service.save_map_to_resources(self.twitter_service.user_tweet_map, self.user_tweet_map_resource)
 
     def upload_tweets(self):
         for account in list(self.model_controller.get_accounts().values()):
             for tweet in account.get_tweets():
                 self.firestore_service.add_tweet(tweet)
             print("Tweets uploaded from " + account.username)
+        self.twitter_service.save_map_to_resources(self.twitter_service.user_tweet_map, self.user_tweet_map_resource)
 
     def download_accounts(self):
         for username in self.twitter_service.user_tweet_map:

@@ -77,4 +77,4 @@ class FireStoreServices(object):
             'source_count_map': {},
             'keyword_map': {}
         }
-        self.db.collection('tweets').document().set(tweet_data)
+        self.db.collection('train_tweets').document().set(tweet_data)
