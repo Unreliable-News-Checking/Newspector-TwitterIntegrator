@@ -32,7 +32,7 @@ class FireStoreServices(object):
                 'tweets_count': account.tweets_count,
                 'website': account.website,
                 'profile_photo': account.profile_photo,
-                'birthday': account.birthday,
+                'birthday': account.birthday
             }
             self.db.collection('accounts').document(account.username).update(account_data)
         else:
@@ -48,6 +48,7 @@ class FireStoreServices(object):
                 'birthday': account.birthday,
                 'news_count': 0,
                 'news_group_leadership_count': 0,
+                'news_group_membership_count': 0,
                 'like_count': 0,
                 'dislike_count': 0,
                 'category_map': {}
@@ -77,4 +78,4 @@ class FireStoreServices(object):
             'source_count_map': {},
             'keyword_map': {}
         }
-        self.db.collection('train_tweets').document().set(tweet_data)
+        self.db.collection('tweets').document().set(tweet_data)
