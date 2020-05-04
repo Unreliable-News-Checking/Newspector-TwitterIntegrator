@@ -64,21 +64,3 @@ class CategorizationService:
 
         return category
 
-    @contextmanager
-    def timeout(self, time_amount):
-        # Register a function to raise a TimeoutError on the signal.
-        signal.signal(signal.SIGALRM, self.raise_timeout)
-
-        signal.alarm(time_amount)
-
-        try:
-            yield
-        except TimeoutError:
-            pass
-        finally:
-            # Unregister the signal so it won't be triggered
-            # if the timeout is not reached.
-            signal.signal(signal.SIGALRM, signal.SIG_IGN)
-
-    def raise_timeout(self, signum, frame):
-        raise TimeoutError
