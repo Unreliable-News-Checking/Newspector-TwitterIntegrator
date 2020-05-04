@@ -18,7 +18,7 @@ class FireStoreServices(object):
 
         if followers is None:
             followers = 0
-            
+
         if followings is None:
             followings = 0
 
@@ -73,6 +73,7 @@ class FireStoreServices(object):
             'label': tweet.label,
             'category': tweet.category,
             'perceived_category': tweet.perceived_category,
+            'sentiment_score': tweet.sentiment_score,
             'report_count': 0,
             'news_group_id': "",
             'source_count_map': {},

@@ -6,7 +6,7 @@ from google.cloud.language import enums
 from google.cloud.language import types
 from boilerpy3 import extractors
 import os
-import time
+from func_timeout import func_set_timeout
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
     "Resources/category-extraction-service-key.json"
@@ -39,6 +39,7 @@ class CategorizationService:
         categories = self.client.classify_text(document=document)
         return categories
 
+    @func_set_timeout(10)
     def get_category(self, url):
         category = "-"
 
@@ -63,4 +64,3 @@ class CategorizationService:
                     print("Map does not have key: " + categories[0].name.split("/")[1])
 
         return category
-

@@ -45,13 +45,17 @@ class TwitterServices:
         return self.user_tweet_map.update({account_name: last_fetched_tweet_id})
 
     def filter_tweets_since_id(self, tweets, tweet_id):
-        def filter_tweets(tweet):
-            if int(tweet["tweetId"]) > tweet_id:
-                return True
-            else:
-                return False
+        filtered_list = []
 
-        return list(filter(filter_tweets, tweets))
+        for tweet in tweets:
+            if tweet["tweetId"] != tweet_id:
+                filtered_list.append(tweet)
+            elif tweet["tweetId"] == tweet_id:
+                break
+            else:
+                print("Problem Occurred in Filter Tweets Since ID methods")
+
+        return filtered_list
 
     def fetch_latest_tweets_from_account(self, account_name, number_of_pages, last_fetched_tweet_id):
         tweets = get_tweets(account_name, pages=number_of_pages)

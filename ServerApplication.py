@@ -47,25 +47,32 @@ class ServerApplication(object):
             if len(tweets) != 0:
                 last_tweet_id = 0
                 for tweet in tweets:
-                    category = "-"
+
                     if len(tweet["entries"]["urls"]) > 0:
                         print(tweet["entries"]["urls"][0])
 
-                        category = self.categorization_service.get_category(
-                            tweet["entries"]["urls"][0])
+                        try:
+                            category = self.categorization_service.get_category(
+                                tweet["entries"]["urls"][0])
+                        except:
+                            category = "-"
 
-                        sentiment = self.sentiment_analysis_service.get_sentiment_from_text(
-                            self.categorization_service.extract_content(tweet["entries"]["urls"][0]))
+                        try:
+                            sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(
+                                self.categorization_service.extract_content(tweet["entries"]["urls"][0]))
+                        except:
+                            sentiment_score = 0.0
                     else:
-                        sentiment = self.sentiment_analysis_service.get_sentiment_from_text(tweet["text"])
+                        category = "-"
+                        sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(tweet["text"])
 
-                    print("Category: " + category + ", Sentiment: " + sentiment)
+                    print("Category: " + category + ", Sentiment Score: " + str(sentiment_score))
 
                     t = Tweet.Tweet(i, tweet["tweetId"], tweet["isRetweet"], tweet["time"],
                                     tweet["text"], tweet["replies"], tweet["retweets"], tweet["likes"],
                                     tweet["entries"]["urls"],
                                     tweet["entries"]["photos"],
-                                    tweet["entries"]["videos"], category)
+                                    tweet["entries"]["videos"], category, sentiment_score)
                     self.model_controller.add_tweet_to_account(t, i)
                     if int(tweet["tweetId"]) > last_tweet_id:
                         last_tweet_id = int(tweet["tweetId"])
