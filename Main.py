@@ -7,7 +7,7 @@ user_tweet_map_resource = "Resources/UserTweetIDMap.json"
 firestore_credentials_resource = "Resources/service-account-file.json"
 filter_resource = "Resources/stop_words.json"
 category_subcategory_map_resource = "Resources/Category_SubCategory_map.json"
-page_count_for_account = 30
+page_count_for_account = 2
 
 server_app = ServerApplication.ServerApplication(accounts_resource, user_tweet_map_resource,
                                                  firestore_credentials_resource, filter_resource,

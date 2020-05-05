@@ -1,5 +1,12 @@
 # This is the model class of a news
 import re
+from datetime import datetime
+
+
+def get_date_in_millis(date):
+    dt_obj = datetime.strptime(date,
+                               '%d.%m.%Y %H:%M:%S,%f')
+    return dt_obj.timestamp() * 1000
 
 
 class Tweet(object):
@@ -10,7 +17,7 @@ class Tweet(object):
         self.username = username
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
-        self.date = date
+        self.date = get_date_in_millis(date)
         self.text = text
         self.reply_count = reply_count
         self.retweet_count = retweet_count
