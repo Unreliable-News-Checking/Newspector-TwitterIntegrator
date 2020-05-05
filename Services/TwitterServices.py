@@ -1,9 +1,9 @@
 # This class will handle tweet fetching by using the twitter api
-
+import twint
 import json
 import os
-from twitter_scraper import get_tweets
-from twitter_scraper import Profile
+import pandas
+
 
 
 class TwitterServices:
@@ -41,25 +41,27 @@ class TwitterServices:
             with open(self.user_tweet_map_resource) as json_file:
                 return json.load(json_file)
 
-    def update_map(self, account_name, last_fetched_tweet_id):  # updates the map after fetch operation on source  done
-        return self.user_tweet_map.update({account_name: last_fetched_tweet_id})
+    def update_map(self, account_name, last_fetched_date):  # updates the map after fetch operation on source  done
+        return self.user_tweet_map.update({account_name: last_fetched_date})
 
-    def filter_tweets_since_id(self, tweets, tweet_id):
-        filtered_list = []
-
-        for tweet in tweets:
-            if tweet["tweetId"] != tweet_id:
-                filtered_list.append(tweet)
-            elif tweet["tweetId"] == tweet_id:
-                break
-            else:
-                print("Problem Occurred in Filter Tweets Since ID methods")
-
-        return filtered_list
-
-    def fetch_latest_tweets_from_account(self, account_name, number_of_pages, last_fetched_tweet_id):
-        tweets = get_tweets(account_name, pages=number_of_pages)
-        return self.filter_tweets_since_id(tweets, last_fetched_tweet_id)
+    def fetch_latest_tweets_from_account(self, account_name, last_fetched_date):
+        conf = twint.Config()
+        conf.Username = account_name
+        conf.Since = last_fetched_date
+        conf.Hide_output = True
+        conf.Pandas = True
+        twint.run.Search(conf)
+        tweets: pandas.DataFrame = twint.storage.panda.Tweets_df
+        twint.storage.panda.clean()
+        return tweets
 
     def fetch_account_info(self, account_name):
-        return Profile(account_name)
+        conf = twint.Config()
+        conf.Username = account_name
+        conf.Limit = 1
+        conf.Hide_output = True
+        conf.Pandas = True
+        twint.run.Lookup(conf)
+        account = twint.storage.panda.User_df
+        twint.storage.panda.clean()
+        return account

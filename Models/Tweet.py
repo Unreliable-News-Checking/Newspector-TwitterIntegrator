@@ -4,8 +4,8 @@ from datetime import datetime
 
 
 def get_date_in_millis(date):
-    dt_obj = datetime.strptime(date,
-                               '%d.%m.%Y %H:%M:%S,%f')
+    dt_obj = datetime.strptime(str(date),
+                               '%Y-%m-%d %H:%M:%S')
     return dt_obj.timestamp() * 1000
 
 
@@ -13,7 +13,8 @@ class Tweet(object):
 
     # instance attributes
     def __init__(self, username, tweet_id, is_retweet, date, text, reply_count, retweet_count, likes, urls,
-                 photos, videos, category, sentiment_score):
+                 photos, video, hashtags, cashtags, source, created_at, retweet_date, user_rt_id, link,
+                 datestamp, place, timezone, category, sentiment_score):
         self.username = username
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
@@ -24,7 +25,17 @@ class Tweet(object):
         self.likes = likes
         self.urls = urls
         self.photos = photos
-        self.videos = videos
+        self.video = video
+        self.hashtags = hashtags,
+        self.cashtags = cashtags,
+        self.source = source,
+        self.created_at = created_at,
+        self.retweet_date = retweet_date,
+        self.user_rt_id = user_rt_id,
+        self.link = link,
+        self.datestamp = datestamp,
+        self.place = place,
+        self.timezone = timezone,
         self.category = category
         self.perceived_category = category
         self.sentiment_score = sentiment_score

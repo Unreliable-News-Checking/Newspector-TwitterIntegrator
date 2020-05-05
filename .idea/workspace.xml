@@ -6,6 +6,9 @@
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/Tweet.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Tweet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/UserTweetIDMap.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/UserTweetIDMap.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerApplication.py" beforeDir="false" afterPath="$PROJECT_DIR$/ServerApplication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/FirestoreServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/Services/FirestoreServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/TwitterServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TwitterServices.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +50,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -265,7 +269,8 @@
       <workItem from="1588376633224" duration="703000" />
       <workItem from="1588523554117" duration="6846000" />
       <workItem from="1588554082501" duration="181000" />
-      <workItem from="1588590121694" duration="16104000" />
+      <workItem from="1588590121694" duration="17869000" />
+      <workItem from="1588680204967" duration="17840000" />
     </task>
     <servers />
   </component>
@@ -281,42 +286,50 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="414" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1588072492438" />
+    <state x="560" y="66" key="#xdebugger.evaluate" timestamp="1588699090509">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="560" y="66" key="#xdebugger.evaluate/0.0.1366.728@0.0.1366.728" timestamp="1588699090509" />
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1588699112282">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1588699112282" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1585434837142">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1585434837142" />
-    <state width="1323" height="183" key="GridCell.Tab.0.bottom" timestamp="1588636522912">
+    <state width="1323" height="39" key="GridCell.Tab.0.bottom" timestamp="1588698594816">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="183" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588636522912" />
-    <state width="1323" height="183" key="GridCell.Tab.0.center" timestamp="1588636522912">
+    <state width="1323" height="39" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588698594816" />
+    <state width="1323" height="39" key="GridCell.Tab.0.center" timestamp="1588698594816">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="183" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1588636522912" />
-    <state width="1323" height="183" key="GridCell.Tab.0.left" timestamp="1588636522912">
+    <state width="1323" height="39" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1588698594816" />
+    <state width="1323" height="39" key="GridCell.Tab.0.left" timestamp="1588698594816">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="183" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1588636522912" />
-    <state width="1323" height="183" key="GridCell.Tab.0.right" timestamp="1588636522912">
+    <state width="1323" height="39" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1588698594816" />
+    <state width="1323" height="39" key="GridCell.Tab.0.right" timestamp="1588698594816">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="183" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1588636522912" />
-    <state width="1323" height="262" key="GridCell.Tab.1.bottom" timestamp="1588636547315">
+    <state width="1323" height="39" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1588698594816" />
+    <state width="1323" height="39" key="GridCell.Tab.1.bottom" timestamp="1588698622615">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="262" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588636547315" />
-    <state width="1323" height="262" key="GridCell.Tab.1.center" timestamp="1588636547315">
+    <state width="1323" height="39" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588698622615" />
+    <state width="1323" height="39" key="GridCell.Tab.1.center" timestamp="1588698622615">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="262" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1588636547315" />
-    <state width="1323" height="262" key="GridCell.Tab.1.left" timestamp="1588636547315">
+    <state width="1323" height="39" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1588698622615" />
+    <state width="1323" height="39" key="GridCell.Tab.1.left" timestamp="1588698622615">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="262" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1588636547315" />
-    <state width="1323" height="262" key="GridCell.Tab.1.right" timestamp="1588636547315">
+    <state width="1323" height="39" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1588698622615" />
+    <state width="1323" height="39" key="GridCell.Tab.1.right" timestamp="1588698622615">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="262" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1588636547315" />
+    <state width="1323" height="39" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1588698622615" />
     <state x="125" y="12" key="SettingsEditor" timestamp="1588537023563">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -325,10 +338,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="438" y="208" key="cloudConfig.SelfSettingsDialog/0.0.1366.728@0.0.1366.728" timestamp="1582144018280" />
-    <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1588590317711">
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog" timestamp="1588680212443">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1588590317711" />
+    <state x="379" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1588680212443" />
     <state x="352" y="0" width="661" height="728" key="find.popup" timestamp="1587489660481">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -342,9 +355,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Main.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ServerApplication.py</url>
-          <line>70</line>
-          <option name="timeStamp" value="3" />
+          <line>47</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -352,6 +370,8 @@
       <configuration name="PythonConfigurationType">
         <watch expression="profile.website" />
         <watch expression="__py_debug_temp_var_985684180" />
+        <watch expression="server_app" />
+        <watch expression="Users_df" language="Python" />
       </configuration>
     </watches-manager>
   </component>
@@ -362,6 +382,6 @@
     <SUITE FILE_PATH="coverage/NewspectorTwitterIntegrator$ServiceController.coverage" NAME="ServiceController Coverage Results" MODIFIED="1582485221801" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Controllers" />
     <SUITE FILE_PATH="coverage/NewspectorNewsFetcher$Main.coverage" NAME="Main Coverage Results" MODIFIED="1582151385281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewspectorTwitterIntegrator$CategorizationService.coverage" NAME="CategorizationService Coverage Results" MODIFIED="1588013959077" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Services" />
-    <SUITE FILE_PATH="coverage/NewspectorTwitterIntegrator$Main.coverage" NAME="Main Coverage Results" MODIFIED="1588636522824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NewspectorTwitterIntegrator$Main.coverage" NAME="Main Coverage Results" MODIFIED="1588698594705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
