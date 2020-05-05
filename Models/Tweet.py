@@ -12,30 +12,18 @@ def get_date_in_millis(date):
 class Tweet(object):
 
     # instance attributes
-    def __init__(self, username, tweet_id, is_retweet, date, text, reply_count, retweet_count, likes, urls,
-                 photos, video, hashtags, cashtags, source, created_at, retweet_date, user_rt_id, link,
-                 datestamp, place, timezone, category, sentiment_score):
+    def __init__(self, username, tweet_id, is_retweet, date, text, urls,
+                 photos, video, retweet_date,
+                 category, sentiment_score):
         self.username = username
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
-        self.date = get_date_in_millis(date)
+        self.date = date
         self.text = text
-        self.reply_count = reply_count
-        self.retweet_count = retweet_count
-        self.likes = likes
         self.urls = urls
         self.photos = photos
         self.video = video
-        self.hashtags = hashtags,
-        self.cashtags = cashtags,
-        self.source = source,
-        self.created_at = created_at,
         self.retweet_date = retweet_date,
-        self.user_rt_id = user_rt_id,
-        self.link = link,
-        self.datestamp = datestamp,
-        self.place = place,
-        self.timezone = timezone,
         self.category = category
         self.perceived_category = category
         self.sentiment_score = sentiment_score

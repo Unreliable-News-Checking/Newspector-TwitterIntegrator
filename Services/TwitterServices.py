@@ -1,9 +1,7 @@
-# This class will handle tweet fetching by using the twitter api
+from datetime import datetime
 import twint
 import json
 import os
-import pandas
-
 
 
 class TwitterServices:
@@ -45,14 +43,24 @@ class TwitterServices:
         return self.user_tweet_map.update({account_name: last_fetched_date})
 
     def fetch_latest_tweets_from_account(self, account_name, last_fetched_date):
+        tweets = []
+        dt = str(datetime.fromtimestamp(last_fetched_date / 1000.0))
         conf = twint.Config()
         conf.Username = account_name
-        conf.Since = last_fetched_date
+        conf.Limit = 300
+        conf.Since = dt[0:19]  # date string until seconds
+        conf.Store_object = True
         conf.Hide_output = True
-        conf.Pandas = True
+
         twint.run.Search(conf)
-        tweets: pandas.DataFrame = twint.storage.panda.Tweets_df
-        twint.storage.panda.clean()
+        tweets += twint.output.tweets_list
+        twint.output.clean_lists()
+
+        conf.Native_retweets = True
+        twint.run.Search(conf)
+        tweets += twint.output.tweets_list
+        twint.output.clean_lists()
+
         return tweets
 
     def fetch_account_info(self, account_name):
