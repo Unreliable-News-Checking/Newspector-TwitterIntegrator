@@ -51,7 +51,7 @@ class ServerApplication(object):
         for i in self.twitter_service.user_tweet_map:
             tweets = self.twitter_service.fetch_latest_tweets_from_account(i,
                                                                            self.twitter_service.user_tweet_map[i])
-
+            print(len(tweets))
             if len(tweets) != 0:
                 last_tweet_date = 0
                 for tweet in tweets:
@@ -80,18 +80,19 @@ class ServerApplication(object):
                     #         tweet.id))
                     category = "-"
                     sentiment_score = 0
-                    t = Tweet.Tweet(i, tweet.id, tweet.retweet, tweet.datetime,
+                    t = Tweet.Tweet(i, tweet.id, tweet.retweet,
+                                    get_date_in_millis(tweet.datestamp + " " + tweet.timestamp),
                                     tweet.tweet,
                                     tweet.urls,
                                     tweet.photos,
                                     tweet.video,
-                                    get_date_in_millis(tweet.retweet_date),
+                                    get_date_in_millis(tweet.retweet_date), tweet.datestamp, tweet.timestamp,
                                     category, sentiment_score)
 
                     self.model_controller.add_tweet_to_account(t, i)
 
                     if not tweet.retweet:
-                        millis = tweet.datetime
+                        millis = get_date_in_millis(tweet.datestamp + " " + tweet.timestamp)
                     else:
                         millis = get_date_in_millis(tweet.retweet_date)
 

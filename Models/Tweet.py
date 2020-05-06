@@ -13,12 +13,14 @@ class Tweet(object):
 
     # instance attributes
     def __init__(self, username, tweet_id, is_retweet, date, text, urls,
-                 photos, video, retweet_date,
+                 photos, video, retweet_date, datestamp, timestamp,
                  category, sentiment_score):
         self.username = username
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
         self.date = date
+        self.datestamp = datestamp
+        self.timestamp = timestamp
         self.text = text
         self.urls = urls
         self.photos = photos

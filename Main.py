@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import ServerApplication
 import time
 import twint
@@ -18,3 +20,4 @@ var = 1
 while var == 1:  # This constructs an infinite loop
     server_app.run()
     time.sleep(120)
+

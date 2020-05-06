@@ -62,6 +62,8 @@ class FireStoreServices(object):
             'tweet_id': str(tweet.tweet_id),
             'is_retweet': tweet.is_retweet,
             'date': tweet.date,
+            'datestamp': tweet.datestamp,
+            'timestamp': tweet.timestamp,
             'text': tweet.text,
             'tweet_link': "twitter.com/" + tweet.username + "/status/" + str(tweet.tweet_id),
             'urls': tweet.urls,
