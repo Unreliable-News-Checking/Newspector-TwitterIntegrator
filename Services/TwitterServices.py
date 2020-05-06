@@ -46,7 +46,7 @@ class TwitterServices:
         tweets = []
         dt = str(datetime.fromtimestamp(last_fetched_date / 1000.0))
         conf = twint.Config()
-        conf.Limit = 400
+        conf.Limit = 300
         conf.Username = account_name
         conf.Since = dt[0:19]  # date string until seconds
         conf.Store_object = True

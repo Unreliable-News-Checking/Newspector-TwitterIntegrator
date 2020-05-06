@@ -69,7 +69,7 @@ class FireStoreServices(object):
             'urls': tweet.urls,
             'photos': tweet.photos,
             'video': tweet.video,
-            'retweet_date': list(tweet.retweet_date),
+            'retweet_date': tweet.retweet_date,
             'label': tweet.label,
             'category': tweet.category,
             'perceived_category': tweet.perceived_category,

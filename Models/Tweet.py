@@ -1,12 +1,5 @@
 # This is the model class of a news
 import re
-from datetime import datetime
-
-
-def get_date_in_millis(date):
-    dt_obj = datetime.strptime(str(date),
-                               '%Y-%m-%d %H:%M:%S')
-    return dt_obj.timestamp() * 1000
 
 
 class Tweet(object):
@@ -18,14 +11,14 @@ class Tweet(object):
         self.username = username
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
-        self.date = date
         self.datestamp = datestamp
         self.timestamp = timestamp
+        self.date, self.retweet_date = self.set_date(is_retweet, date, retweet_date)
+        self.set_date(is_retweet, date, retweet_date)
         self.text = text
         self.urls = urls
         self.photos = photos
         self.video = video
-        self.retweet_date = retweet_date,
         self.category = category
         self.perceived_category = category
         self.sentiment_score = sentiment_score
@@ -46,3 +39,9 @@ class Tweet(object):
         self.text = re.sub("BREAKING ", "", self.text)  # Source bazlı filtering e geçince CASE Sensitive yapıcaz
         self.text = re.sub("…", "", self.text, flags=re.IGNORECASE)
         self.text = ' '.join(self.text.split())
+
+    def set_date(self, is_retweet, date, retweet_date):
+        if is_retweet:
+            return retweet_date, date
+        else:
+            return date, retweet_date

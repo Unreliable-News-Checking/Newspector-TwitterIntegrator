@@ -97,7 +97,7 @@ class ServerApplication(object):
                         millis = get_date_in_millis(tweet.retweet_date)
 
                     if millis > last_tweet_date:
-                        last_tweet_date = millis + 1000
+                        last_tweet_date = millis + 1000  # add 1 second for excluding the original tweet
 
                 self.twitter_service.update_map(i, last_tweet_date)
             print("Tweets fetched from " + i)
