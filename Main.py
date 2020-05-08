@@ -19,5 +19,5 @@ server_app = ServerApplication.ServerApplication(accounts_resource, user_tweet_m
 var = 1
 while var == 1:  # This constructs an infinite loop
     server_app.run()
-    time.sleep(120)
+    time.sleep(60)
 

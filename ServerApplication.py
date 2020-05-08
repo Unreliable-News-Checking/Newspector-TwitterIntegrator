@@ -56,30 +56,29 @@ class ServerApplication(object):
                 last_tweet_date = 0
                 for tweet in tweets:
 
-                    # if len(tweet.urls) > 0:
-                    #     print(tweet.urls[0])
-                    #
-                    #     try:
-                    #         category = self.categorization_service.get_category(
-                    #             tweet.urls[0])
-                    #     except:
-                    #         category = "-"
-                    #
-                    #     try:
-                    #         sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(
-                    #             self.categorization_service.extract_content(tweet.urls[0]))
-                    #     except:
-                    #         sentiment_score = 0.0
-                    # else:
-                    #     category = "-"
-                    #     sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(tweet.tweet)
-                    #
-                    # print(
-                    #     "Account: " + i + " , Category:" + category + " , Sentiment:" + str(
-                    #         sentiment_score) + " , ID: " + str(
-                    #         tweet.id))
-                    category = "-"
-                    sentiment_score = 0
+                    if len(tweet.urls) > 0:
+                        print(tweet.urls[0])
+
+                        try:
+                            category = self.categorization_service.get_category(
+                                tweet.urls[0])
+                        except:
+                            category = "-"
+
+                        try:
+                            sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(
+                                self.categorization_service.extract_content(tweet.urls[0]))
+                        except:
+                            sentiment_score = 0.0
+                    else:
+                        category = "-"
+                        sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(tweet.tweet)
+
+                    print(
+                        "Account: " + i + " , Category: " + category + " , Sentiment:" + str(
+                            sentiment_score) + " , ID: " + str(
+                            tweet.id))
+
                     t = Tweet.Tweet(i, tweet.id, tweet.retweet,
                                     get_date_in_millis(tweet.datestamp + " " + tweet.timestamp),
                                     tweet.tweet,
