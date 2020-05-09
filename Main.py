@@ -21,3 +21,4 @@ while var == 1:  # This constructs an infinite loop
     server_app.run()
     time.sleep(60)
 
+

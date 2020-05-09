@@ -6,15 +6,7 @@ from Models import Tweet
 from Services import TwitterServices, CategorizationService, SentimentAnalysisService
 from Services import FirestoreServices
 from Controllers import ModelController
-
-
-def get_date_in_millis(date):
-    if date == "":
-        return 0
-
-    dt_obj = datetime.strptime(str(date),
-                               '%Y-%m-%d %H:%M:%S')
-    return dt_obj.timestamp() * 1000
+from Utilities.DateOperations import get_date_in_millis
 
 
 class ServerApplication(object):
@@ -51,6 +43,7 @@ class ServerApplication(object):
         for i in self.twitter_service.user_tweet_map:
             tweets = self.twitter_service.fetch_latest_tweets_from_account(i,
                                                                            self.twitter_service.user_tweet_map[i])
+
             print(len(tweets))
             if len(tweets) != 0:
                 last_tweet_date = 0
@@ -96,7 +89,7 @@ class ServerApplication(object):
                         millis = get_date_in_millis(tweet.retweet_date)
 
                     if millis > last_tweet_date:
-                        last_tweet_date = millis + 1000  # add 1 second for excluding the original tweet
+                        last_tweet_date = millis
 
                 self.twitter_service.update_map(i, last_tweet_date)
             print("Tweets fetched from " + i)
