@@ -56,15 +56,20 @@ class FireStoreServices(object):
                 'news_count': 0,
                 'news_group_leadership_count': 0,
                 'news_group_membership_count': 0,
+                'first_reporter': 0,
+                'close_second': 0,
+                'late_comer': 0,
+                'slow poke': 0,
+                'follow_up': 0,
                 'category_map': {}
             }
             self.firestore.collection('accounts').document(account.username).set(account_data)  # to firestore db
 
             account_ref = db.reference('accounts')  # to realtime db
             account_ref.child(account.username).set({
-                'likes_count': 0,
-                'dislikes_count': 0,
-                'reports_count': 0,
+                'likes': 0,
+                'dislikes': 0,
+                'reports': 0
             })
         else:
             print("Account exists but updates are done within a 2 day period")
