@@ -8,37 +8,23 @@ from Utilities.DateOperations import get_date_in_millis
 
 class TwitterServices:
 
-    def __init__(self, accounts_resource, user_tweet_map_resource):
+    def __init__(self, accounts_resource, user_tweet_map_resource, breaking_news_tags_resource):
         self.accounts_resource = accounts_resource  # sets the path for the resource
         self.user_tweet_map_resource = user_tweet_map_resource
-        self.user_tweet_map = self.init_map()  # inits the map of (account , last fetched tweet id)
-
-    def get_account_names_from_source(self):
-        with open(self.accounts_resource) as json_file:
-            data = json.load(json_file)
-            account_list = data["accountNames"]
-        return account_list
-
-    def init_map(self):
-        user_tweet_map = self.load_map_from_resources()
-        if user_tweet_map is not None:
-            return user_tweet_map
-        else:
-            account_names = self.get_account_names_from_source()
-            user_tweet_map = {}
-            for name in account_names:
-                user_tweet_map.update({name: 0})
-            return user_tweet_map
+        self.user_tweet_map = self.load_map_from_resources(self.user_tweet_map_resource)
+        self.accounts_map = self.load_map_from_resources(self.accounts_resource)
+        with open(breaking_news_tags_resource) as f:
+            self.breaking_news_tags = json.load(f)
 
     def save_map_to_resources(self, user_tweet_map, resource):
         with open(resource, 'w') as outfile:
             json.dump(user_tweet_map, outfile)
 
-    def load_map_from_resources(self):
-        if os.stat(self.user_tweet_map_resource).st_size == 0:
+    def load_map_from_resources(self, path):
+        if os.stat(path).st_size == 0:
             return None
         else:
-            with open(self.user_tweet_map_resource) as json_file:
+            with open(path) as json_file:
                 return json.load(json_file)
 
     def update_map(self, account_name, last_fetched_date):  # updates the map after fetch operation on source  done
@@ -65,7 +51,16 @@ class TwitterServices:
         result = []
         for tweet in tweets:
             if get_date_in_millis(tweet.datestamp + " " + tweet.timestamp) > last_fetched_date:
-                result.append(tweet)
+                if self.accounts_map[account_name]:
+                    # if the account is a general news account only retrieve breaking news
+                    for tag in self.breaking_news_tags:
+                        text = tweet.tweet
+                        if text.lower().find(tag.lower()) >= 0:
+                            result.append(tweet)
+                else:
+                    result.append(tweet)
+
+        # Add breaking tag filtering for necessary accounts
 
         return result
 

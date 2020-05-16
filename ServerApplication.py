@@ -1,6 +1,4 @@
 import json
-from datetime import datetime
-
 from Models import TwitterAccount
 from Models import Tweet
 from Services import TwitterServices, CategorizationService, SentimentAnalysisService
@@ -12,20 +10,17 @@ from Utilities.DateOperations import get_date_in_millis
 class ServerApplication(object):
 
     def __init__(self, accounts_resource, user_tweet_map_resource, firestore_credentials_resource, stop_words_resource,
+                 breaking_news_tags_resource,
                  category_subcategory_map_resource):
-        self.accounts_resource = accounts_resource
         self.user_tweet_map_resource = user_tweet_map_resource
-        self.category_subcategory_map_resource = category_subcategory_map_resource
-        self.firestore_credentials_resource = firestore_credentials_resource
-        self.stop_words_resource = stop_words_resource
-        self.twitter_service = TwitterServices.TwitterServices(self.accounts_resource, self.user_tweet_map_resource)
-        self.firestore_service = FirestoreServices.FireStoreServices(self.firestore_credentials_resource)
+        self.twitter_service = TwitterServices.TwitterServices(accounts_resource, user_tweet_map_resource, breaking_news_tags_resource)
+        self.firestore_service = FirestoreServices.FireStoreServices(firestore_credentials_resource)
         self.model_controller = ModelController.ModelController()
-        self.categorization_service = CategorizationService.CategorizationService(
-            self.category_subcategory_map_resource)
         self.sentiment_analysis_service = SentimentAnalysisService.SentimentAnalysisService()
+        self.categorization_service = CategorizationService.CategorizationService(
+            category_subcategory_map_resource)
 
-        with open(self.stop_words_resource) as f:
+        with open(stop_words_resource) as f:
             self.stop_words = json.load(f)
 
     def run(self):

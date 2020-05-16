@@ -1,0 +1,19 @@
+{
+  "BreakingNews": false,
+  "cnnbrk": false,
+  "BBCBreaking": false,
+  "SkyNewsBreak": false,
+  "Breaking911": false,
+  "TelegraphNews": false,
+  "MSNBC_Breaking": false,
+  "MirrorBreaking_": false,
+  "latimes" : true,
+  "BreakingNAlerts": false,
+  "FRANCE24": true,
+  "CNBCnow": true,
+  "factal": false,
+  "Faytuks": false,
+  "PMBreakingNews": false,
+  "ajplus": true,
+  "WSJ": true
+}
