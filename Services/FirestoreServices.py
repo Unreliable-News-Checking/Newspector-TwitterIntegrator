@@ -74,6 +74,7 @@ class FireStoreServices(object):
     def add_tweet(self, tweet):
         tweet_data = {
             'username': tweet.username,
+            'name': tweet.name,
             'userRef': self.firestore.collection("accounts").document(tweet.username),
             'tweet_id': str(tweet.tweet_id),
             'is_retweet': tweet.is_retweet,

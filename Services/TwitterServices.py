@@ -57,6 +57,7 @@ class TwitterServices:
                         text = tweet.tweet
                         if text.lower().find(tag.lower()) >= 0:
                             result.append(tweet)
+                            break
                 else:
                     result.append(tweet)
 

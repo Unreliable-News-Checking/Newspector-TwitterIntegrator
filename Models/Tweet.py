@@ -5,10 +5,11 @@ import re
 class Tweet(object):
 
     # instance attributes
-    def __init__(self, username, tweet_id, is_retweet, date, text, urls,
+    def __init__(self, username, name, tweet_id, is_retweet, date, text, urls,
                  photos, video, retweet_date, datestamp, timestamp,
                  category, sentiment_score):
         self.username = username
+        self.name = name
         self.tweet_id = tweet_id
         self.is_retweet = is_retweet
         self.datestamp = datestamp

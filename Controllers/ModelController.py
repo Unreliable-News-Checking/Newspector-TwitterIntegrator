@@ -16,6 +16,9 @@ class ModelController(object):
     def add_or_update_account(self, account):
         self.account_hash_map.update({account.username: account})
 
+    def get_account(self, account):
+        return self.account_hash_map.get(account)
+
     def get_filtered_tweets_from_account(self, username):
         return self.account_hash_map.get(username).get_tweets()
 

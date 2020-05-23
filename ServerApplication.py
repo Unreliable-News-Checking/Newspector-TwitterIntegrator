@@ -13,7 +13,8 @@ class ServerApplication(object):
                  breaking_news_tags_resource,
                  category_subcategory_map_resource):
         self.user_tweet_map_resource = user_tweet_map_resource
-        self.twitter_service = TwitterServices.TwitterServices(accounts_resource, user_tweet_map_resource, breaking_news_tags_resource)
+        self.twitter_service = TwitterServices.TwitterServices(accounts_resource, user_tweet_map_resource,
+                                                               breaking_news_tags_resource)
         self.firestore_service = FirestoreServices.FireStoreServices(firestore_credentials_resource)
         self.model_controller = ModelController.ModelController()
         self.sentiment_analysis_service = SentimentAnalysisService.SentimentAnalysisService()
@@ -67,7 +68,9 @@ class ServerApplication(object):
                             sentiment_score) + " , ID: " + str(
                             tweet.id))
 
-                    t = Tweet.Tweet(i, tweet.id, tweet.retweet,
+                    account_name = self.model_controller.get_account(i).name
+
+                    t = Tweet.Tweet(i, account_name, tweet.id, tweet.retweet,
                                     get_date_in_millis(tweet.datestamp + " " + tweet.timestamp),
                                     tweet.tweet,
                                     tweet.urls,
