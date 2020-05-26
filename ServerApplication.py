@@ -54,14 +54,13 @@ class ServerApplication(object):
                         except:
                             category = "-"
 
-                        try:
-                            sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(
-                                self.categorization_service.extract_content(tweet.urls[0]))
-                        except:
-                            sentiment_score = 0.0
                     else:
                         category = "-"
+
+                    try:
                         sentiment_score = self.sentiment_analysis_service.get_sentiment_from_text(tweet.tweet)
+                    except:
+                        sentiment_score = 0.0
 
                     print(
                         "Account: " + i + " , Category: " + category + " , Sentiment:" + str(

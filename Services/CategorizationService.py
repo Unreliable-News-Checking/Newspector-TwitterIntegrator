@@ -15,7 +15,7 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = \
 class CategorizationService:
 
     def __init__(self, category_subcategory_map_resource):
-        self.extractor = extractors.LargestContentExtractor()
+        self.extractor = extractors.ArticleExtractor()
         self.client = language.LanguageServiceClient()
         with open(category_subcategory_map_resource) as json_file:
             self.map = json.load(json_file)
@@ -26,7 +26,7 @@ class CategorizationService:
         except:
             return None
         content = content.replace("\n", "").replace("\"", "")
-        content = content[:999]
+        content = content[:500]
         return content
 
     def get_categories(self, text: str):
