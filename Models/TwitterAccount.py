@@ -1,4 +1,6 @@
 import numpy as np
+
+
 # This is the model class of a news source which will store news and other related information about the source
 
 
@@ -13,7 +15,7 @@ class TwitterAccount(object):
         self.following_count = int(following_count)
         self.likes_count = int(likes_count)
         self.tweets_count = int(tweets_count)
-        self.website = website
+        self.website = website.replace("http://", "https://")
         self.profile_photo = profile_photo
         self.birthday = birthday
         self.bio = bio

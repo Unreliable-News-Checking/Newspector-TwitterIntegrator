@@ -20,13 +20,14 @@ class CategorizationService:
         with open(category_subcategory_map_resource) as json_file:
             self.map = json.load(json_file)
 
-    def extract_content(self, url):
+    def extract_content(self, url, headline):
         try:
             content = self.extractor.get_content_from_url(url)
         except:
             return None
         content = content.replace("\n", "").replace("\"", "")
         content = content[:500]
+        content += headline
         return content
 
     def get_categories(self, text: str):
@@ -40,10 +41,10 @@ class CategorizationService:
         return categories
 
     @func_set_timeout(10)
-    def get_category(self, url):
+    def get_category(self, url, headline):
         category = "-"
 
-        content = self.extract_content(url)
+        content = self.extract_content(url, headline)
 
         if content is None:
             return category

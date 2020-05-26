@@ -40,6 +40,7 @@ class Tweet(object):
         self.text = re.sub("BREAKING ", "", self.text)  # Source bazlı filtering e geçince CASE Sensitive yapıcaz
         self.text = re.sub("…", "", self.text, flags=re.IGNORECASE)
         self.text = ' '.join(self.text.split())
+        self.text = self.text.encode('ascii', 'ignore').decode('ascii')
 
     def set_date(self, is_retweet, date, retweet_date):
         if is_retweet:

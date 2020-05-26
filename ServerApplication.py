@@ -40,7 +40,6 @@ class ServerApplication(object):
             tweets = self.twitter_service.fetch_latest_tweets_from_account(i,
                                                                            self.twitter_service.user_tweet_map[i])
 
-            print(len(tweets))
             if len(tweets) != 0:
                 last_tweet_date = 0
                 for tweet in tweets:
@@ -50,7 +49,7 @@ class ServerApplication(object):
 
                         try:
                             category = self.categorization_service.get_category(
-                                tweet.urls[0])
+                                tweet.urls[0], tweet.tweet)
                         except:
                             category = "-"
 
@@ -89,7 +88,7 @@ class ServerApplication(object):
                         last_tweet_date = millis
 
                 self.twitter_service.update_map(i, last_tweet_date)
-            print("Tweets fetched from " + i)
+            print(str(len(tweets)) + " Tweets fetched from " + i)
 
     def upload_tweets(self):
         for account in list(self.model_controller.get_accounts().values()):
