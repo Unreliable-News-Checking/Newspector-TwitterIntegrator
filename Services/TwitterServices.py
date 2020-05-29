@@ -2,7 +2,6 @@ from datetime import datetime
 import twint
 import json
 import os
-
 from Utilities.DateOperations import get_date_in_millis
 
 
@@ -32,8 +31,10 @@ class TwitterServices:
 
     def fetch_latest_tweets_from_account(self, account_name, last_fetched_date):
         tweets = []
-        dt = str(datetime.fromtimestamp((last_fetched_date - 86400000) / 1000.0))  # start search form 1 day before
+        dt = str(
+            datetime.fromtimestamp((last_fetched_date - 86400000) / 1000.0))  # start search form 1 day before
         conf = twint.Config()
+        twint.output.clean_lists()
         conf.Username = account_name
         conf.Since = dt[0:19]
         conf.Store_object = True
@@ -61,8 +62,7 @@ class TwitterServices:
                 else:
                     result.append(tweet)
 
-        # Add breaking tag filtering for necessary accounts
-
+            # Add breaking tag filtering for necessary accounts
         return result
 
     def fetch_account_info(self, account_name):

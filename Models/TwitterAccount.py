@@ -10,7 +10,7 @@ class TwitterAccount(object):
     def __init__(self, username, name, followers_count, following_count, likes_count, tweets_count, website,
                  profile_photo, birthday, bio):
         self.username = username
-        self.name = name
+        self.name = name.encode('ascii', 'ignore').decode('ascii')
         self.followers_count = int(followers_count)
         self.following_count = int(following_count)
         self.likes_count = int(likes_count)

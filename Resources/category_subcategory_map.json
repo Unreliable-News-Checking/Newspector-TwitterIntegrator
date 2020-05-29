@@ -7,7 +7,7 @@
   "Law & Government": "Law & Government",
   "Pets & Animals": "Pets & Animals",
   "Food & Drink": "Food & Drink",
-  "Arts & Entertainment": "Art & Entertainment",
+  "Arts & Entertainment": "Arts & Entertainment",
   "People & Society": "People & Society",
   "Computers & Electronics": "Computers & Electronics",
   "Business & Industrial": "Business & Industrial",
@@ -33,5 +33,5 @@
   "News/Health News": "Health",
   "News/Politics": "Law & Government",
   "News/Sports News": "Sports",
-  "News": "Other"
+  "News": "General"
 }

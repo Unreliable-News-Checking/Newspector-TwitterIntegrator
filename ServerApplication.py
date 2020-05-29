@@ -37,8 +37,14 @@ class ServerApplication(object):
 
     def download_tweets(self):
         for i in self.twitter_service.user_tweet_map:
-            tweets = self.twitter_service.fetch_latest_tweets_from_account(i,
-                                                                           self.twitter_service.user_tweet_map[i])
+            while True:
+                try:
+                    tweets = self.twitter_service.fetch_latest_tweets_from_account(i,
+                                                                                   self.twitter_service.user_tweet_map[
+                                                                                       i])
+                    break
+                except :
+                    print("Exception")
 
             if len(tweets) != 0:
                 last_tweet_date = 0
