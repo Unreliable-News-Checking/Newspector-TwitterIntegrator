@@ -44,14 +44,25 @@ class TwitterServices:
         tweets += twint.output.tweets_list
         twint.output.clean_lists()
 
+        conf = twint.Config()
+        conf.Username = account_name
+        conf.Since = dt[0:19]
+        conf.Store_object = True
+        conf.Hide_output = True
         conf.Native_retweets = True
         twint.run.Search(conf)
+
         tweets += twint.output.tweets_list
         twint.output.clean_lists()
 
         result = []
         for tweet in tweets:
-            if get_date_in_millis(tweet.datestamp + " " + tweet.timestamp) > last_fetched_date:
+            if tweet.retweet:
+                tweet_date = get_date_in_millis(tweet.retweet_date)
+            else:
+                tweet_date = get_date_in_millis(tweet.datestamp + " " + tweet.timestamp)
+
+            if tweet_date > last_fetched_date:
                 if self.accounts_map[account_name]:
                     # if the account is a general news account only retrieve breaking news
                     for tag in self.breaking_news_tags:

@@ -44,7 +44,7 @@ class ServerApplication(object):
                                                                                        i])
                     break
                 except :
-                    print("Exception")
+                    print("Exception Occurred")
 
             if len(tweets) != 0:
                 last_tweet_date = 0

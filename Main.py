@@ -1,8 +1,8 @@
-# import firebase_admin
-# from firebase_admin import credentials
-# from firebase_admin import firestore
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 import ServerApplication
-# import time
+import time
 
 
 # Parameters
@@ -22,16 +22,17 @@ server_app = ServerApplication.ServerApplication(accounts_resource, user_tweet_m
 var = 1
 while var == 1:  # This constructs an infinite loop
     server_app.run()
+    time.sleep(60)
 
-#
+
 # cred = credentials.Certificate("Resources/service-account-file.json")
 # app = firebase_admin.initialize_app(cred,
 #                                                  {'databaseURL': 'https://newspector-backend.firebaseio.com/'})
 # firestore = firestore.client()
 #
-# cities_ref = firestore.collection(u'news_groups')
+# cities_ref = firestore.collection(u'tweets')
 #
-# docs = cities_ref.where(u'category', u'==', "Art & Entertainment").stream()
+# docs = cities_ref.where(u'username', u'==', "FRANCE24").stream()
 #
 # for doc in docs:
-#     firestore.collection('news_groups').document(doc.id).update({"category": "Arts & Entertainment"})
+#     firestore.collection('tweets').document(doc.id).delete()
