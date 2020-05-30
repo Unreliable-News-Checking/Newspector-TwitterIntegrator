@@ -1,6 +1,6 @@
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+# import firebase_admin
+# from firebase_admin import credentials
+# from firebase_admin import firestore
 import ServerApplication
 import time
 
@@ -32,7 +32,7 @@ while var == 1:  # This constructs an infinite loop
 #
 # cities_ref = firestore.collection(u'tweets')
 #
-# docs = cities_ref.where(u'username', u'==', "FRANCE24").stream()
+# docs = cities_ref.where(u'username', u'==', "MirrorBreaking_").stream()
 #
 # for doc in docs:
 #     firestore.collection('tweets').document(doc.id).delete()

@@ -5,14 +5,13 @@
   "SkyNewsBreak": false,
   "TelegraphNews": false,
   "MSNBC_Breaking": false,
-  "MirrorBreaking_": false,
+  "MirrorBreaking_": true,
   "latimes" : true,
+  "nytimes" : true,
   "BreakingF24": false,
-  "Breaking911": true,
   "CNBCnow": true,
   "factal": false,
-  "Faytuks": true,
-  "PMBreakingNews": false,
+  "AJENews": true,
   "ajplus": true,
   "WSJ": true
 }

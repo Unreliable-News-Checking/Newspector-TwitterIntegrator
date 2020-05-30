@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 import twint
 import json
@@ -65,15 +66,21 @@ class TwitterServices:
             if tweet_date > last_fetched_date:
                 if self.accounts_map[account_name]:
                     # if the account is a general news account only retrieve breaking news
+                    text = tweet.tweet
+                    text = re.sub(r"http\S+", "", text)
+                    text = re.sub(r"pic.twitter.com\S+", "", text)
+
+                    # Corner Case for some accounts
+                    if text.find("BREAKING ") >= 0:
+                        result.append(tweet)
+                        continue
+
                     for tag in self.breaking_news_tags:
-                        text = tweet.tweet
                         if text.lower().find(tag.lower()) >= 0:
                             result.append(tweet)
                             break
                 else:
                     result.append(tweet)
-
-            # Add breaking tag filtering for necessary accounts
         return result
 
     def fetch_account_info(self, account_name):
